@@ -99,17 +99,15 @@ namespace Refactoring
                                 Product prod = prods[i];
                                 Console.WriteLine(i + 1 + ": " + prod.Name + " (" + prod.Price.ToString("C") + ")");
                             }
-                            Console.WriteLine(prods.Count + 1 + ": Exit");
+                            Console.WriteLine();
+                            Console.WriteLine("Type quit to exit the application");
+                            Console.WriteLine();
 
                             // Prompt for user input
                             Console.WriteLine("Enter a number:");
                             string answer = Console.ReadLine();
-                            int num = Convert.ToInt32(answer);
-                            num = num - 1; /* Subtract 1 from number
-                            num = num + 1 // Add 1 to number */
 
-                            // Check if user entered number that equals product count
-                            if (num == prods.Count)
+                            if (answer.ToUpper().Trim() == "QUIT")
                             {
                                 // Update balance
                                 foreach (var usr in usrs)
@@ -138,60 +136,67 @@ namespace Refactoring
                             }
                             else
                             {
-                                Console.WriteLine();
-                                Console.WriteLine("You want to buy: " + prods[num].Name);
-                                Console.WriteLine("Your balance is " + bal.ToString("C"));
+                                int num;
 
-                                // Prompt for user input
-                                Console.WriteLine("Enter amount to purchase:");
-                                answer = Console.ReadLine();
-                                int qty = Convert.ToInt32(answer);
-
-                                // Check if balance - quantity * price is less than 0
-                                if (bal - prods[num].Price * qty < 0)
+                                if (validateProduct(answer, prods.Count, out num))
                                 {
-                                    Console.Clear();
-                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    num--;
+
                                     Console.WriteLine();
-                                    Console.WriteLine("You do not have enough money to buy that.");
-                                    Console.ResetColor();
-                                    continue;
-                                }
+                                    Console.WriteLine("You want to buy: " + prods[num].Name);
+                                    Console.WriteLine("Your balance is " + bal.ToString("C"));
 
-                                // Check if quantity is less than quantity
-                                if (prods[num].Qty < qty)
-                                {
-                                    Console.Clear();
-                                    Console.ForegroundColor = ConsoleColor.Red;
-                                    Console.WriteLine();
-                                    Console.WriteLine("Sorry, " + prods[num].Name + " is out of stock");
-                                    Console.ResetColor();
-                                    continue;
-                                }
+                                    // Prompt for user input
+                                    Console.WriteLine("Enter amount to purchase:");
+                                    answer = Console.ReadLine();
+                                    int qty = Convert.ToInt32(answer);
 
-                                // Check if quantity is greater than zero
-                                if (qty > 0)
-                                {
-                                    // Balance = Balance - Price * Quantity
-                                    bal = bal - prods[num].Price * qty;
+                                    // Check if balance - quantity * price is less than 0
+                                    if (bal - prods[num].Price * qty < 0)
+                                    {
+                                        Console.Clear();
+                                        Console.ForegroundColor = ConsoleColor.Red;
+                                        Console.WriteLine();
+                                        Console.WriteLine("You do not have enough money to buy that.");
+                                        Console.ResetColor();
+                                        continue;
+                                    }
 
-                                    // Quanity = Quantity - Quantity
-                                    prods[num].Qty = prods[num].Qty - qty;
+                                    // Check if quantity is less than quantity
+                                    if (prods[num].Qty < qty)
+                                    {
+                                        Console.Clear();
+                                        Console.ForegroundColor = ConsoleColor.Red;
+                                        Console.WriteLine();
+                                        Console.WriteLine("Sorry, " + prods[num].Name + " is out of stock");
+                                        Console.ResetColor();
+                                        continue;
+                                    }
 
-                                    Console.Clear();
-                                    Console.ForegroundColor = ConsoleColor.Green;
-                                    Console.WriteLine("You bought " + qty + " " + prods[num].Name);
-                                    Console.WriteLine("Your new balance is " + bal.ToString("C"));
-                                    Console.ResetColor();
-                                }
-                                else
-                                {
-                                    // Quantity is less than zero
-                                    Console.Clear();
-                                    Console.ForegroundColor = ConsoleColor.Yellow;
-                                    Console.WriteLine();
-                                    Console.WriteLine("Purchase cancelled");
-                                    Console.ResetColor();
+                                    // Check if quantity is greater than zero
+                                    if (qty > 0)
+                                    {
+                                        // Balance = Balance - Price * Quantity
+                                        bal = bal - prods[num].Price * qty;
+
+                                        // Quanity = Quantity - Quantity
+                                        prods[num].Qty = prods[num].Qty - qty;
+
+                                        Console.Clear();
+                                        Console.ForegroundColor = ConsoleColor.Green;
+                                        Console.WriteLine("You bought " + qty + " " + prods[num].Name);
+                                        Console.WriteLine("Your new balance is " + bal.ToString("C"));
+                                        Console.ResetColor();
+                                    }
+                                    else
+                                    {
+                                        // Quantity is less than zero
+                                        Console.Clear();
+                                        Console.ForegroundColor = ConsoleColor.Yellow;
+                                        Console.WriteLine();
+                                        Console.WriteLine("Purchase cancelled");
+                                        Console.ResetColor();
+                                    }
                                 }
                             }
                         }
@@ -225,6 +230,30 @@ namespace Refactoring
             Console.WriteLine();
             Console.WriteLine("Press Enter key to exit");
             Console.ReadLine();
+        }
+
+        private static bool validateProduct(string productNumberEntered, int numberOfProducts, out int productNumber)
+        {
+            bool validProductSelected = false;
+
+            if (Int32.TryParse(productNumberEntered, out productNumber) && (productNumber <= numberOfProducts) && (productNumber > 0))
+            {
+                validProductSelected = true;
+            }
+            else
+            {
+                ShowProductNumberInvalidMessage(numberOfProducts);
+            }
+            return validProductSelected;
+        }
+
+        private static void ShowProductNumberInvalidMessage(int numberOfProducts)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("");
+            Console.WriteLine("Product numbers must be numeric in the range of 1 - " + numberOfProducts.ToString());
+            Console.WriteLine("");
+            Console.ResetColor();
         }
     }
 }
