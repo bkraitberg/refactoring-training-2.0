@@ -17,7 +17,7 @@ namespace UnitTestProject
         private List<Product> products;
         private List<Product> originalProducts;
 
-        private int EXIT_NUMBER = 8;
+        private int EXIT_NUMBER = 0;
 
         [SetUp]
         public void Test_Initialize()
@@ -29,6 +29,8 @@ namespace UnitTestProject
             // Load products from data file
             originalProducts = JsonConvert.DeserializeObject<List<Product>>(File.ReadAllText(@"Data/Products.json"));
             products = DeepCopy<List<Product>>(originalProducts);
+
+            EXIT_NUMBER = products.Count + 1;
         }
 
         [TearDown]
@@ -52,7 +54,7 @@ namespace UnitTestProject
             {
                 Console.SetOut(writer);
 
-                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n1\r\n8\r\n\r\n"))
+                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n1\r\n" + EXIT_NUMBER + "\r\n\r\n"))
                 {
                     Console.SetIn(reader);
 
@@ -68,7 +70,7 @@ namespace UnitTestProject
             {
                 Console.SetOut(writer);
 
-                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n1\r\n8\r\n\r\n"))
+                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n1\r\n" + EXIT_NUMBER + "\r\n\r\n"))
                 {
                     Console.SetIn(reader);
 
@@ -136,7 +138,7 @@ namespace UnitTestProject
             {
                 Console.SetOut(writer);
 
-                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n0\r\n8\r\n\r\n"))
+                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n0\r\n" + EXIT_NUMBER + "\r\n\r\n"))
                 {
                     Console.SetIn(reader);
 
@@ -159,7 +161,7 @@ namespace UnitTestProject
             {
                 Console.SetOut(writer);
 
-                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n1\r\n8\r\n\r\n"))
+                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n1\r\n" + EXIT_NUMBER + "\r\n\r\n"))
                 {
                     Console.SetIn(reader);
 
@@ -181,7 +183,7 @@ namespace UnitTestProject
             {
                 Console.SetOut(writer);
 
-                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n1\r\n8\r\n\r\n"))
+                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n1\r\n" + EXIT_NUMBER + "\r\n\r\n"))
                 {
                     Console.SetIn(reader);
 
@@ -199,14 +201,14 @@ namespace UnitTestProject
             {
                 Console.SetOut(writer);
 
-                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n1\r\n8\r\n\r\n"))
+                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n1\r\n" + EXIT_NUMBER + "\r\n\r\n"))
                 {
                     Console.SetIn(reader);
 
                     Tusc.Start(users, products);
                 }
 
-                Assert.IsTrue(writer.ToString().Contains("8: Exit"));
+                Assert.IsTrue(writer.ToString().Contains("" + EXIT_NUMBER + ": Exit"));
             }
         }
 
