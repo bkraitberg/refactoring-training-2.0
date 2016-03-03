@@ -101,7 +101,10 @@ namespace Refactoring
                             for (int i = 0; i < ProductCount; i++)
                             {
                                 Product prod = prods[i];
-                                Console.WriteLine(i + 1 + ": " + prod.Name + " (" + prod.Price.ToString("C") + ")");
+                                if (prod.Qty > 0)
+                                {
+                                    Console.WriteLine(i + 1 + ": " + prod.Name + " (" + prod.Price.ToString("C") + ")");
+                                }
                             }
                             Console.WriteLine("Type quit to exit the application");
 
@@ -152,7 +155,7 @@ namespace Refactoring
                                 Console.ReadLine();
                                 return;
                             }
-                            else
+                            else if(prods[num].Qty > 0)
                             {
                                 Console.WriteLine();
                                 Console.WriteLine("You want to buy: " + prods[num].Name);
@@ -177,11 +180,7 @@ namespace Refactoring
                                 // Check if quantity is less than quantity
                                 if (qty > prods[num].Qty )
                                 {
-                                    Console.Clear();
-                                    Console.ForegroundColor = ConsoleColor.Red;
-                                   // Console.WriteLine();
-                                    Console.WriteLine("Sorry, " + prods[num].Name + " is out of stock");
-                                    Console.ResetColor();
+                                    OutOfStockMessage(prods, num);
                                     continue;
                                 }
 
@@ -209,6 +208,12 @@ namespace Refactoring
                                     Console.WriteLine("Purchase cancelled");
                                     Console.ResetColor();
                                 }
+                            }
+                            else
+                            {
+                                //just for fun
+                                OutOfStockMessage(prods, num);
+                                continue;
                             }
                         }
                     }
@@ -241,6 +246,15 @@ namespace Refactoring
             Console.WriteLine();
             Console.WriteLine("Press Enter key to exit");
             Console.ReadLine();
+        }
+
+        private static void OutOfStockMessage(List<Product> prods, int num)
+        {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Red;
+            // Console.WriteLine();
+            Console.WriteLine("Sorry, " + prods[num].Name + " is out of stock");
+            Console.ResetColor();
         }
     }
 }
