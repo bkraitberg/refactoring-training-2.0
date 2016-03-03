@@ -10,8 +10,12 @@ namespace Refactoring
 {
     public class Tusc
     {
+        private static int ProductCount;
+
+
         public static void Start(List<User> usrs, List<Product> prods)
         {
+            ProductCount = prods.Count;
             // Write welcome message
             Console.WriteLine("Welcome to TUSC");
             Console.WriteLine("---------------");
@@ -94,7 +98,7 @@ namespace Refactoring
                             // Prompt for user input
                             Console.WriteLine();
                             Console.WriteLine("What would you like to buy?");
-                            for (int i = 0; i < 7; i++)
+                            for (int i = 0; i < ProductCount; i++)
                             {
                                 Product prod = prods[i];
                                 Console.WriteLine(i + 1 + ": " + prod.Name + " (" + prod.Price.ToString("C") + ")");
@@ -152,7 +156,7 @@ namespace Refactoring
                                 {
                                     Console.Clear();
                                     Console.ForegroundColor = ConsoleColor.Red;
-                                    Console.WriteLine();
+                                    //Console.WriteLine();
                                     Console.WriteLine("You do not have enough money to buy that.");
                                     Console.ResetColor();
                                     continue;
@@ -163,7 +167,7 @@ namespace Refactoring
                                 {
                                     Console.Clear();
                                     Console.ForegroundColor = ConsoleColor.Red;
-                                    Console.WriteLine();
+                                   // Console.WriteLine();
                                     Console.WriteLine("Sorry, " + prods[num].Name + " is out of stock");
                                     Console.ResetColor();
                                     continue;
