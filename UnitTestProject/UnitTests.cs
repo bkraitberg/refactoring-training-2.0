@@ -50,7 +50,7 @@ namespace UnitTestProject
             {
                 Console.SetOut(writer);
 
-                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n1\r\n9\r\n\r\n"))
+                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n1\r\nquit\r\n\r\n"))
                 {
                     Console.SetIn(reader);
 
@@ -66,7 +66,7 @@ namespace UnitTestProject
             {
                 Console.SetOut(writer);
 
-                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n1\r\n9\r\n\r\n"))
+                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n1\r\nquit\r\n\r\n"))
                 {
                     Console.SetIn(reader);
 
@@ -134,7 +134,7 @@ namespace UnitTestProject
             {
                 Console.SetOut(writer);
 
-                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n0\r\n9\r\n\r\n"))
+                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n0\r\nquit\r\n\r\n"))
                 {
                     Console.SetIn(reader);
 
@@ -157,7 +157,7 @@ namespace UnitTestProject
             {
                 Console.SetOut(writer);
 
-                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n1\r\n9\r\n\r\n"))
+                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n1\r\nquit\r\n\r\n"))
                 {
                     Console.SetIn(reader);
 
@@ -179,7 +179,7 @@ namespace UnitTestProject
             {
                 Console.SetOut(writer);
 
-                using (var reader = new StringReader("Jason\r\nsfa\r\n2\r\n1\r\n9\r\n\r\n"))
+                using (var reader = new StringReader("Jason\r\nsfa\r\n2\r\n1\r\nquit\r\n\r\n"))
                 {
                     Console.SetIn(reader);
 
@@ -190,14 +190,14 @@ namespace UnitTestProject
             }
         }
 
-        [Test]
+        /*[Test]
         public void Test_ProductListContainsExitItem()
         {
             using (var writer = new StringWriter())
             {
                 Console.SetOut(writer);
 
-                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n1\r\n9\r\n\r\n"))
+                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n1\r\nquit\r\n\r\n"))
                 {
                     Console.SetIn(reader);
 
@@ -206,7 +206,7 @@ namespace UnitTestProject
 
                 Assert.IsTrue(writer.ToString().Contains("9: Exit"));
             }
-        }
+        }*/
 
         [Test]
         public void Test_UserCanPurchaseProductWhenOnlyOneInStock()
@@ -215,7 +215,7 @@ namespace UnitTestProject
             {
                 Console.SetOut(writer);
 
-                using (var reader = new StringReader("Jason\r\nsfa\r\n8\r\n1\r\n9\r\n\r\n"))
+                using (var reader = new StringReader("Jason\r\nsfa\r\n8\r\n1\r\nquit\r\n\r\n"))
                 {
                     Console.SetIn(reader);
 
@@ -227,24 +227,24 @@ namespace UnitTestProject
 
         }
 
-        //[Test]
-        //public void Test_UserCanExitByEnteringQuit()
-        //{
-        //    using (var writer = new StringWriter())
-        //    {
-        //        Console.SetOut(writer);
+        [Test]
+        public void Test_UserCanExitByEnteringQuit()
+        {
+            using (var writer = new StringWriter())
+            {
+                Console.SetOut(writer);
 
-        //        using (var reader = new StringReader("Jason\r\nsfa\r\nquit\r\n\r\n"))
-        //        {
-        //            Console.SetIn(reader);
+                using (var reader = new StringReader("Jason\r\nsfa\r\nquit\r\n\r\n"))
+                {
+                    Console.SetIn(reader);
 
-        //            Tusc.Start(users, products);
-        //        }
+                    Tusc.Start(users, products);
+                }
 
-        //        Assert.IsTrue(writer.ToString().Contains("Type quit to exit the application"));
-        //        Assert.IsTrue(writer.ToString().Contains("Press Enter key to exit"));
-        //    }
-        //}
+                Assert.IsTrue(writer.ToString().Contains("Type quit to exit the application"));
+                Assert.IsTrue(writer.ToString().Contains("Press Enter key to exit"));
+            }
+        }
 
         private static T DeepCopy<T>(T obj)
         {
