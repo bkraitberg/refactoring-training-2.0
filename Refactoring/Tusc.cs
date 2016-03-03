@@ -99,17 +99,15 @@ namespace Refactoring
                                 Product prod = prods[i];
                                 Console.WriteLine(i + 1 + ": " + prod.Name + " (" + prod.Price.ToString("C") + ")");
                             }
-                            Console.WriteLine(prods.Count + 1 + ": Exit");
+                            Console.WriteLine("Type quit to exit the application");
 
                             // Prompt for user input
                             Console.WriteLine("Enter a number:");
                             string answer = Console.ReadLine();
-                            int num = Convert.ToInt32(answer);
-                            num = num - 1; /* Subtract 1 from number
-                            num = num + 1 // Add 1 to number */
+
 
                             // Check if user entered number that equals product count
-                            if (num == prods.Count)
+                            if (answer.ToLower().Trim().Equals("quit"))
                             {
                                 // Update balance
                                 foreach (var usr in usrs)
@@ -138,6 +136,10 @@ namespace Refactoring
                             }
                             else
                             {
+                                int num = Convert.ToInt32(answer);
+                                num = num - 1; /* Subtract 1 from number
+                                num = num + 1 // Add 1 to number */
+
                                 Console.WriteLine();
                                 Console.WriteLine("You want to buy: " + prods[num].Name);
                                 Console.WriteLine("Your balance is " + bal.ToString("C"));
