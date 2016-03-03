@@ -12,7 +12,7 @@ namespace Refactoring
     {
         public static string QUIT_CODE = "quit";
 
-        public static void Start(List<User> usrs, List<Product> prods)
+        public static void Start(List<User> usrs, List<Product> initialProducts)
         {
             // Write welcome message
             Console.WriteLine("Welcome to TUSC");
@@ -93,6 +93,8 @@ namespace Refactoring
                         // Show product list
                         while (true)
                         {
+                            List<Product> prods = FilterProductList(initialProducts);
+
                             // Prompt for user input
                             Console.WriteLine();
                             Console.WriteLine("What would you like to buy?");
@@ -140,7 +142,7 @@ namespace Refactoring
                             }
                             else if (num >= prods.Count) 
                             {
-                                ShowProductNumberInvalidMessage(prods.Count-1);
+                                ShowProductNumberInvalidMessage(prods.Count);
                             }
                             else
                             {
@@ -233,6 +235,11 @@ namespace Refactoring
             Console.ReadLine();
         }
 
+        private static List<Product> FilterProductList(List<Product> InitialProductList)
+        {
+            List<Product> validProducts = InitialProductList.Where(x => x.Qty > 0).ToList();
+            return validProducts;
+        }
 
         private static void ShowProductNumberInvalidMessage(int maxProductNumber)
         {
