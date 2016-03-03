@@ -16,6 +16,7 @@ namespace UnitTestProject
         private List<User> originalUsers;
         private List<Product> products;
         private List<Product> originalProducts;
+        private int EXIT_NUMBER;
 
         [SetUp]
         public void Test_Initialize()
@@ -27,6 +28,8 @@ namespace UnitTestProject
             // Load products from data file
             originalProducts = JsonConvert.DeserializeObject<List<Product>>(File.ReadAllText(@"Data/Products.json"));
             products = DeepCopy<List<Product>>(originalProducts);
+
+            EXIT_NUMBER = products.Count + 1;
         }
 
         [TearDown]
@@ -50,7 +53,7 @@ namespace UnitTestProject
             {
                 Console.SetOut(writer);
 
-                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n1\r\n8\r\n\r\n"))
+                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n1\r\n" + EXIT_NUMBER + "\r\n\r\n"))
                 {
                     Console.SetIn(reader);
 
@@ -66,7 +69,7 @@ namespace UnitTestProject
             {
                 Console.SetOut(writer);
 
-                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n1\r\n8\r\n\r\n"))
+                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n1\r\n" + EXIT_NUMBER + "\r\n\r\n"))
                 {
                     Console.SetIn(reader);
 
@@ -134,7 +137,7 @@ namespace UnitTestProject
             {
                 Console.SetOut(writer);
 
-                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n0\r\n8\r\n\r\n"))
+                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n0\r\n" + EXIT_NUMBER + "\r\n\r\n"))
                 {
                     Console.SetIn(reader);
 
@@ -151,13 +154,15 @@ namespace UnitTestProject
         {
             // Update data file
             List<User> tempUsers = DeepCopy<List<User>>(originalUsers);
+            List<Product> tempProducts = DeepCopy<List<Product>>(originalProducts);
+            int chipsIndex = tempProducts.FindIndex(u => u.Name == "Chips") + 1;
             tempUsers.Where(u => u.Name == "Jason").Single().Bal = 0.0;
 
             using (var writer = new StringWriter())
             {
                 Console.SetOut(writer);
 
-                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n1\r\n8\r\n\r\n"))
+                using (var reader = new StringReader("Jason\r\nsfa\r\n" + chipsIndex + "\r\n1\r\n" + EXIT_NUMBER + "\r\n\r\n"))
                 {
                     Console.SetIn(reader);
 
@@ -173,13 +178,14 @@ namespace UnitTestProject
         {
             // Update data file
             List<Product> tempProducts = DeepCopy<List<Product>>(originalProducts);
+            int chipsIndex = tempProducts.FindIndex(u => u.Name == "Chips") + 1;
             tempProducts.Where(u => u.Name == "Chips").Single().Qty = 0;
 
             using (var writer = new StringWriter())
             {
                 Console.SetOut(writer);
 
-                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n1\r\n8\r\n\r\n"))
+                using (var reader = new StringReader("Jason\r\nsfa\r\n" + chipsIndex + "\r\n1\r\n" + EXIT_NUMBER + "\r\n\r\n"))
                 {
                     Console.SetIn(reader);
 
@@ -197,14 +203,14 @@ namespace UnitTestProject
             {
                 Console.SetOut(writer);
 
-                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n1\r\n8\r\n\r\n"))
+                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n1\r\n" + EXIT_NUMBER + "\r\n\r\n"))
                 {
                     Console.SetIn(reader);
 
                     Tusc.Start(users, products);
                 }
 
-                Assert.IsTrue(writer.ToString().Contains("8: Exit"));
+                Assert.IsTrue(writer.ToString().Contains("Exit"));
             }
         }
 
@@ -213,13 +219,14 @@ namespace UnitTestProject
         {
             // Update data file
             List<Product> tempProducts = DeepCopy<List<Product>>(originalProducts);
+            int chipsIndex = tempProducts.FindIndex(u => u.Name == "Chips") + 1;
             tempProducts.Where(u => u.Name == "Chips").Single().Qty = 1;
 
             using (var writer = new StringWriter())
             {
                 Console.SetOut(writer);
 
-                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n1\r\n8\r\n\r\n"))
+                using (var reader = new StringReader("Jason\r\nsfa\r\n" + chipsIndex + "\r\n1\r\n" + EXIT_NUMBER + "\r\n\r\n"))
                 {
                     Console.SetIn(reader);
 
