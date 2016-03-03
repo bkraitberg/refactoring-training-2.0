@@ -229,6 +229,7 @@ namespace UnitTestProject
                     Tusc.Start(users, products);
                 }
 
+
                 Assert.IsTrue(writer.ToString().Contains("" + EXIT_NUMBER + ": Exit"));
             }
         }
