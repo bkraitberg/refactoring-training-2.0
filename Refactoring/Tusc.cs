@@ -159,7 +159,7 @@ namespace Refactoring
                                 }
 
                                 // Check if quantity is less than quantity
-                                if (prods[num].Qty <= qty)
+                                if (prods[num].Qty < qty || prods[num].Qty == 0)
                                 {
                                     Console.Clear();
                                     Console.ForegroundColor = ConsoleColor.Red;
