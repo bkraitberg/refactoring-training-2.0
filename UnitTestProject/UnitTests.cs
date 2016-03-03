@@ -17,6 +17,8 @@ namespace UnitTestProject
         private List<Product> products;
         private List<Product> originalProducts;
 
+        private int EXIT_NUMBER = 8;
+
         [SetUp]
         public void Test_Initialize()
         {
@@ -205,6 +207,28 @@ namespace UnitTestProject
                 }
 
                 Assert.IsTrue(writer.ToString().Contains("8: Exit"));
+            }
+        }
+
+        [Test]
+        public void Test_UserCanPurchaseProductWhenOnlyOneInStock()
+        {
+            // Update data file
+            List<Product> tempProducts = DeepCopy<List<Product>>(originalProducts);
+            tempProducts.Where(u => u.Name == "Chips").Single().Qty = 1;
+
+            using (var writer = new StringWriter())
+            {
+                Console.SetOut(writer);
+
+                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n1\r\n" + EXIT_NUMBER + "\r\n\r\n"))
+                {
+                    Console.SetIn(reader);
+
+                    Tusc.Start(users, tempProducts);
+                }
+
+                Assert.IsTrue(writer.ToString().Contains("You bought 1 Chips"));
             }
         }
 
