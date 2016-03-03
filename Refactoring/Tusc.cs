@@ -94,16 +94,21 @@ namespace Refactoring
                             // Prompt for user input
                             Console.WriteLine();
                             Console.WriteLine("What would you like to buy?");
-                            for (int i = 0; i < 7; i++)
+                            for (int i = 0; i < prods.Count; i++)
                             {
                                 Product prod = prods[i];
                                 Console.WriteLine(i + 1 + ": " + prod.Name + " (" + prod.Price.ToString("C") + ")");
                             }
-                            Console.WriteLine(prods.Count + 1 + ": Exit");
+                            Console.WriteLine("Type quit to exit the application");
 
                             // Prompt for user input
                             Console.WriteLine("Enter a number:");
                             string answer = Console.ReadLine();
+
+                            if (answer.ToLower() == "quit")
+                            {
+                                answer = (prods.Count + 1).ToString(); 
+                            }
                             int num = Convert.ToInt32(answer);
                             num = num - 1; /* Subtract 1 from number
                             num = num + 1 // Add 1 to number */
