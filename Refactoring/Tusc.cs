@@ -65,7 +65,14 @@ namespace Refactoring
                         loggedIn = true;
 
                         // Show welcome message
-                        Console.Clear();
+                        try
+                        {
+                            Console.Clear();
+                        }
+                        catch (IOException)
+                        {
+                            
+                        }
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine();
                         Console.WriteLine("Login successful! Welcome " + name + "!");
@@ -150,7 +157,14 @@ namespace Refactoring
                                 // Check if balance - quantity * price is less than 0
                                 if (bal - prods[num].Price * qty < 0)
                                 {
-                                    Console.Clear();
+                                    try
+                                    {
+                                        Console.Clear();
+                                    }
+                                    catch (IOException)
+                                    {
+
+                                    }
                                     Console.ForegroundColor = ConsoleColor.Red;
                                     Console.WriteLine();
                                     Console.WriteLine("You do not have enough money to buy that.");
@@ -159,9 +173,16 @@ namespace Refactoring
                                 }
 
                                 // Check if quantity is less than quantity
-                                if (prods[num].Qty <= qty)
+                                if (prods[num].Qty < qty)
                                 {
-                                    Console.Clear();
+                                    try
+                                    {
+                                        Console.Clear();
+                                    }
+                                    catch (IOException)
+                                    {
+
+                                    }
                                     Console.ForegroundColor = ConsoleColor.Red;
                                     Console.WriteLine();
                                     Console.WriteLine("Sorry, " + prods[num].Name + " is out of stock");
@@ -178,7 +199,14 @@ namespace Refactoring
                                     // Quanity = Quantity - Quantity
                                     prods[num].Qty = prods[num].Qty - qty;
 
-                                    Console.Clear();
+                                    try
+                                    {
+                                        Console.Clear();
+                                    }
+                                    catch (IOException)
+                                    {
+
+                                    }
                                     Console.ForegroundColor = ConsoleColor.Green;
                                     Console.WriteLine("You bought " + qty + " " + prods[num].Name);
                                     Console.WriteLine("Your new balance is " + bal.ToString("C"));
@@ -187,7 +215,14 @@ namespace Refactoring
                                 else
                                 {
                                     // Quantity is less than zero
-                                    Console.Clear();
+                                    try
+                                    {
+                                        Console.Clear();
+                                    }
+                                    catch (IOException)
+                                    {
+
+                                    }
                                     Console.ForegroundColor = ConsoleColor.Yellow;
                                     Console.WriteLine();
                                     Console.WriteLine("Purchase cancelled");
@@ -199,7 +234,14 @@ namespace Refactoring
                     else
                     {
                         // Invalid Password
-                        Console.Clear();
+                        try
+                        {
+                            Console.Clear();
+                        }
+                        catch (IOException)
+                        {
+
+                        }
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine();
                         Console.WriteLine("You entered an invalid password.");
@@ -211,7 +253,14 @@ namespace Refactoring
                 else
                 {
                     // Invalid User
-                    Console.Clear();
+                    try
+                    {
+                        Console.Clear();
+                    }
+                    catch (IOException)
+                    {
+
+                    }
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine();
                     Console.WriteLine("You entered an invalid user.");
