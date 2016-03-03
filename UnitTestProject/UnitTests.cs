@@ -17,6 +17,7 @@ namespace UnitTestProject
         private List<Product> products;
         private List<Product> originalProducts;
         private int EXIT_NUMBER = 0;
+        private string EXIT_APP = "quit";
 
         [SetUp]
         public void Test_Initialize()
@@ -234,24 +235,24 @@ namespace UnitTestProject
             }
         }
 
-        //[Test]
-        //public void Test_UserCanExitByEnteringQuit()
-        //{
-        //    using (var writer = new StringWriter())
-        //    {
-        //        Console.SetOut(writer);
+        [Test]
+        public void Test_UserCanExitByEnteringQuit()
+        {
+            using (var writer = new StringWriter())
+            {
+                Console.SetOut(writer);
 
-        //        using (var reader = new StringReader("Jason\r\nsfa\r\nquit\r\n\r\n"))
-        //        {
-        //            Console.SetIn(reader);
+                using (var reader = new StringReader("Jason\r\nsfa\r\n" + EXIT_APP + "\r\n\r\n"))
+                {
+                    Console.SetIn(reader);
 
-        //            Tusc.Start(users, products);
-        //        }
+                    Tusc.Start(users, products);
+                }
 
-        //        Assert.IsTrue(writer.ToString().Contains("Type quit to exit the application"));
-        //        Assert.IsTrue(writer.ToString().Contains("Press Enter key to exit"));
-        //    }
-        //}
+                Assert.IsTrue(writer.ToString().Contains("Type quit to exit the application"));
+                Assert.IsTrue(writer.ToString().Contains("Press Enter key to exit"));
+            }
+        }
 
         private static T DeepCopy<T>(T obj)
         {
