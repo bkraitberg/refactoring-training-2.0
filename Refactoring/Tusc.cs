@@ -10,8 +10,12 @@ namespace Refactoring
 {
     public class Tusc
     {
+        private static int ProductCount;
+
+
         public static void Start(List<User> usrs, List<Product> prods)
         {
+            ProductCount = prods.Count;
             // Write welcome message
             Console.WriteLine("Welcome to TUSC");
             Console.WriteLine("---------------");
@@ -94,19 +98,34 @@ namespace Refactoring
                             // Prompt for user input
                             Console.WriteLine();
                             Console.WriteLine("What would you like to buy?");
-                            for (int i = 0; i < 7; i++)
+                            for (int i = 0; i < ProductCount; i++)
                             {
                                 Product prod = prods[i];
-                                Console.WriteLine(i + 1 + ": " + prod.Name + " (" + prod.Price.ToString("C") + ")");
+                                if (prod.Qty > 0)
+                                {
+                                    Console.WriteLine(i + 1 + ": " + prod.Name + " (" + prod.Price.ToString("C") + ")");
+                                }
                             }
-                            Console.WriteLine(prods.Count + 1 + ": Exit");
+                            Console.WriteLine("Type quit to exit the application");
 
                             // Prompt for user input
                             Console.WriteLine("Enter a number:");
-                            string answer = Console.ReadLine();
-                            int num = Convert.ToInt32(answer);
-                            num = num - 1; /* Subtract 1 from number
-                            num = num + 1 // Add 1 to number */
+                            string answer; 
+                            string QuantityEntered = Console.ReadLine();
+                            int num;
+                            bool isNumeric = int.TryParse(QuantityEntered, out num);
+                           
+                            if (isNumeric)
+                            {
+                                num = num - 1;
+                            }
+                            else
+                            {
+                                if (QuantityEntered == "quit")
+                                {
+                                    break;
+                                }
+                            }
 
                             // Check if user entered number that equals product count
                             if (num == prods.Count)
@@ -136,7 +155,7 @@ namespace Refactoring
                                 Console.ReadLine();
                                 return;
                             }
-                            else
+                            else if(prods[num].Qty > 0)
                             {
                                 Console.WriteLine();
                                 Console.WriteLine("You want to buy: " + prods[num].Name);
@@ -152,20 +171,16 @@ namespace Refactoring
                                 {
                                     Console.Clear();
                                     Console.ForegroundColor = ConsoleColor.Red;
-                                    Console.WriteLine();
+                                    //Console.WriteLine();
                                     Console.WriteLine("You do not have enough money to buy that.");
                                     Console.ResetColor();
                                     continue;
                                 }
 
                                 // Check if quantity is less than quantity
-                                if (prods[num].Qty <= qty)
+                                if (qty > prods[num].Qty )
                                 {
-                                    Console.Clear();
-                                    Console.ForegroundColor = ConsoleColor.Red;
-                                    Console.WriteLine();
-                                    Console.WriteLine("Sorry, " + prods[num].Name + " is out of stock");
-                                    Console.ResetColor();
+                                    OutOfStockMessage(prods, num);
                                     continue;
                                 }
 
@@ -193,6 +208,12 @@ namespace Refactoring
                                     Console.WriteLine("Purchase cancelled");
                                     Console.ResetColor();
                                 }
+                            }
+                            else
+                            {
+                                //just for fun
+                                OutOfStockMessage(prods, num);
+                                continue;
                             }
                         }
                     }
@@ -225,6 +246,15 @@ namespace Refactoring
             Console.WriteLine();
             Console.WriteLine("Press Enter key to exit");
             Console.ReadLine();
+        }
+
+        private static void OutOfStockMessage(List<Product> prods, int num)
+        {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Red;
+            // Console.WriteLine();
+            Console.WriteLine("Sorry, " + prods[num].Name + " is out of stock");
+            Console.ResetColor();
         }
     }
 }
