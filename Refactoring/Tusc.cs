@@ -97,7 +97,7 @@ namespace Refactoring
                             for (int i = 0; i < prods.Count; i++)
                             {
                                 Product prod = prods[i];
-                                Console.WriteLine(i + 1 + ": " + prod.Name + " (" + prod.Price.ToString("C") + ")");
+                                Console.WriteLine(prod.Id + ": " + prod.Name + " (" + prod.Price.ToString("C") + ")");
                             }
                             Console.WriteLine("Type quit to exit the application");
 
@@ -135,12 +135,11 @@ namespace Refactoring
                             }
                             else
                             {
-                                int num = Convert.ToInt32(answer);
-                                num = num - 1; /* Subtract 1 from number
-                                num = num + 1 // Add 1 to number */
+                                string id = answer;
+                                var productIndex = GetProductIndexById(prods, id);
 
                                 Console.WriteLine();
-                                Console.WriteLine("You want to buy: " + prods[num].Name);
+                                Console.WriteLine("You want to buy: " + prods[productIndex].Name);
                                 Console.WriteLine("Your balance is " + bal.ToString("C"));
 
                                 // Prompt for user input
@@ -149,7 +148,7 @@ namespace Refactoring
                                 int qty = Convert.ToInt32(answer);
 
                                 // Check if balance - quantity * price is less than 0
-                                if (bal - prods[num].Price * qty < 0)
+                                if (bal - prods[productIndex].Price * qty < 0)
                                 {
                                     Console.Clear();
                                     Console.ForegroundColor = ConsoleColor.Red;
@@ -160,12 +159,12 @@ namespace Refactoring
                                 }
 
                                 // Check if quantity is less than quantity
-                                if (prods[num].Qty < qty)
+                                if (prods[productIndex].Qty < qty)
                                 {
                                     Console.Clear();
                                     Console.ForegroundColor = ConsoleColor.Red;
                                     Console.WriteLine();
-                                    Console.WriteLine("Sorry, " + prods[num].Name + " is out of stock");
+                                    Console.WriteLine("Sorry, " + prods[productIndex].Name + " is out of stock");
                                     Console.ResetColor();
                                     continue;
                                 }
@@ -174,14 +173,14 @@ namespace Refactoring
                                 if (qty > 0)
                                 {
                                     // Balance = Balance - Price * Quantity
-                                    bal = bal - prods[num].Price * qty;
+                                    bal = bal - prods[productIndex].Price * qty;
 
                                     // Quanity = Quantity - Quantity
-                                    prods[num].Qty = prods[num].Qty - qty;
+                                    prods[productIndex].Qty = prods[productIndex].Qty - qty;
 
                                     Console.Clear();
                                     Console.ForegroundColor = ConsoleColor.Green;
-                                    Console.WriteLine("You bought " + qty + " " + prods[num].Name);
+                                    Console.WriteLine("You bought " + qty + " " + prods[productIndex].Name);
                                     Console.WriteLine("Your new balance is " + bal.ToString("C"));
                                     Console.ResetColor();
                                 }
@@ -226,6 +225,11 @@ namespace Refactoring
             Console.WriteLine();
             Console.WriteLine("Press Enter key to exit");
             Console.ReadLine();
+        }
+
+        private static int GetProductIndexById(List<Product> prods, string id)
+        {
+            return prods.FindIndex(prod => prod.Id.Equals(id));
         }
     }
 }
