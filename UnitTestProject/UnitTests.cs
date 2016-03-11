@@ -208,6 +208,26 @@ namespace UnitTestProject
             }
         }
 
+        [Test]
+        public void Test_UserCanPurchaseProductWhenOnlyOneInStock()
+        {
+            products[0].Qty = 1;
+
+            using (var writer = new StringWriter())
+            {
+                Console.SetOut(writer);
+
+                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n1\r\n8\r\n\r\n"))
+                {
+                    Console.SetIn(reader);
+
+                    Tusc.Start(users, products);
+                }
+
+                Assert.IsFalse(writer.ToString().Contains("is out of stock"));
+            }
+        }
+
         //[Test]
         //public void Test_UserCanExitByEnteringQuit()
         //{
