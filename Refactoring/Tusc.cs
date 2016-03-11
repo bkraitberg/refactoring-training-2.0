@@ -97,7 +97,9 @@ namespace Refactoring
                             for (int i = 0; i < prods.Count; i++)
                             {
                                 Product prod = prods[i];
-                                Console.WriteLine(prod.Id + ": " + prod.Name + " (" + prod.Price.ToString("C") + ")");
+                                
+                                if(prod.Qty > 0) 
+                                    Console.WriteLine(prod.Id + ": " + prod.Name + " (" + prod.Price.ToString("C") + ")");
                             }
                             Console.WriteLine("Type quit to exit the application");
 
