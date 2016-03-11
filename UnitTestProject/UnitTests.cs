@@ -50,7 +50,7 @@ namespace UnitTestProject
             {
                 Console.SetOut(writer);
 
-                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n1\r\n8\r\n\r\n"))
+                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n1\r\n" + (products.Count+1) + "\r\n\r\n"))
                 {
                     Console.SetIn(reader);
 
@@ -66,7 +66,7 @@ namespace UnitTestProject
             {
                 Console.SetOut(writer);
 
-                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n1\r\n8\r\n\r\n"))
+                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n1\r\n" + (products.Count+1) + "\r\n\r\n"))
                 {
                     Console.SetIn(reader);
 
@@ -134,7 +134,7 @@ namespace UnitTestProject
             {
                 Console.SetOut(writer);
 
-                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n0\r\n8\r\n\r\n"))
+                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n0\r\n" + (products.Count+1) + "\r\n\r\n"))
                 {
                     Console.SetIn(reader);
 
@@ -157,7 +157,7 @@ namespace UnitTestProject
             {
                 Console.SetOut(writer);
 
-                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n1\r\n8\r\n\r\n"))
+                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n1\r\n" + (products.Count+1) + "\r\n\r\n"))
                 {
                     Console.SetIn(reader);
 
@@ -179,7 +179,7 @@ namespace UnitTestProject
             {
                 Console.SetOut(writer);
 
-                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n1\r\n8\r\n\r\n"))
+                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n1\r\n" + (products.Count+1) + "\r\n\r\n"))
                 {
                     Console.SetIn(reader);
 
@@ -197,14 +197,14 @@ namespace UnitTestProject
             {
                 Console.SetOut(writer);
 
-                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n1\r\n8\r\n\r\n"))
+                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n1\r\n" + (products.Count+1) + "\r\n\r\n"))
                 {
                     Console.SetIn(reader);
 
                     Tusc.Start(users, products);
                 }
 
-                Assert.IsTrue(writer.ToString().Contains("8: Exit"));
+                Assert.IsTrue(writer.ToString().Contains((products.Count+1) + ": Exit"));
             }
         }
 
@@ -217,7 +217,7 @@ namespace UnitTestProject
             {
                 Console.SetOut(writer);
 
-                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n1\r\n8\r\n\r\n"))
+                using (var reader = new StringReader("Jason\r\nsfa\r\n1\r\n1\r\n" + (products.Count+1) + "\r\n\r\n"))
                 {
                     Console.SetIn(reader);
 
