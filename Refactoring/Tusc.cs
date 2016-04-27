@@ -10,7 +10,9 @@ namespace Refactoring
 {
     public class Tusc
     {
-        public static void Start(List<User> usrs, List<Product> prods)
+        public static string QUIT_CODE = "quit";
+
+        public static void Start(List<User> usrs, List<Product> initialProducts)
         {
             // Write welcome message
             Console.WriteLine("Welcome to TUSC");
@@ -91,25 +93,27 @@ namespace Refactoring
                         // Show product list
                         while (true)
                         {
+                            List<Product> prods = FilterProductList(initialProducts);
+
                             // Prompt for user input
                             Console.WriteLine();
                             Console.WriteLine("What would you like to buy?");
-                            for (int i = 0; i < 7; i++)
+                            for (int i = 0; i < prods.Count; i++)
                             {
                                 Product prod = prods[i];
                                 Console.WriteLine(i + 1 + ": " + prod.Name + " (" + prod.Price.ToString("C") + ")");
                             }
-                            Console.WriteLine(prods.Count + 1 + ": Exit");
+                            Console.WriteLine("Type quit to exit the application");
 
                             // Prompt for user input
                             Console.WriteLine("Enter a number:");
                             string answer = Console.ReadLine();
-                            int num = Convert.ToInt32(answer);
-                            num = num - 1; /* Subtract 1 from number
-                            num = num + 1 // Add 1 to number */
+                            int num = 0;
+                            Int32.TryParse(answer, out num);
+                            num = num - 1; 
 
                             // Check if user entered number that equals product count
-                            if (num == prods.Count)
+                            if (answer.Equals(QUIT_CODE))
                             {
                                 // Update balance
                                 foreach (var usr in usrs)
@@ -136,6 +140,10 @@ namespace Refactoring
                                 Console.ReadLine();
                                 return;
                             }
+                            else if (num >= prods.Count) 
+                            {
+                                ShowProductNumberInvalidMessage(prods.Count);
+                            }
                             else
                             {
                                 Console.WriteLine();
@@ -159,7 +167,7 @@ namespace Refactoring
                                 }
 
                                 // Check if quantity is less than quantity
-                                if (prods[num].Qty <= qty)
+                                if (prods[num].Qty < qty)
                                 {
                                     Console.Clear();
                                     Console.ForegroundColor = ConsoleColor.Red;
@@ -226,5 +234,20 @@ namespace Refactoring
             Console.WriteLine("Press Enter key to exit");
             Console.ReadLine();
         }
-    }
+
+        private static List<Product> FilterProductList(List<Product> InitialProductList)
+        {
+            List<Product> validProducts = InitialProductList.Where(x => x.Qty > 0).ToList();
+            return validProducts;
+        }
+
+        private static void ShowProductNumberInvalidMessage(int maxProductNumber)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("");
+            Console.WriteLine("Product numbers must be numeric in the range of 1 - " + maxProductNumber.ToString());
+            Console.WriteLine("");
+            Console.ResetColor();
+        }
+    }    
 }
